@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Attendance Percentage Counter</title>
+  <meta name="description" content="Track attendance per subject, see your percentage, and find out how many classes you can miss or must attend to hit your target.">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Attendance counter</h1>
+    <p>Log every class. Know exactly where you stand against your target.</p>
+  </header>
+
+  <main class="layout">
+    <aside class="panel" aria-label="Overall attendance and settings">
+      <section class="overall" aria-labelledby="overall-title">
+        <h2 id="overall-title">Overall attendance</h2>
+
+        <div class="dial" id="dial" data-status="empty">
+          <svg viewBox="0 0 220 220" role="img" aria-label="Overall attendance dial">
+            <circle class="dial-track" cx="110" cy="110" r="92"></circle>
+            <circle class="dial-fill" id="dial-fill" cx="110" cy="110" r="92" transform="rotate(-90 110 110)"></circle>
+            <g id="dial-tick"><line x1="110" y1="6" x2="110" y2="30"></line></g>
+          </svg>
+          <div class="dial-readout">
+            <span class="dial-number" id="overall-pct">0</span><span class="dial-unit">%</span>
+            <span class="dial-sub" id="overall-count">0 of 0 classes</span>
+          </div>
+        </div>
+
+        <p class="verdict" id="overall-msg" aria-live="polite">Add a subject to begin.</p>
+      </section>
+
+      <section class="settings" aria-labelledby="target-title">
+        <h2 id="target-title">Target attendance</h2>
+        <div class="target-row">
+          <input type="range" id="target-range" min="1" max="100" value="75" aria-label="Target attendance percentage">
+          <label class="target-value">
+            <input type="number" id="target-number" min="1" max="100" value="75" inputmode="numeric" aria-label="Target percentage">
+            <span>%</span>
+          </label>
+        </div>
+        <p class="hint">The tick on the dial and every bar marks this target.</p>
+      </section>
+
+      <section class="add" aria-labelledby="add-title">
+        <h2 id="add-title">Add a subject</h2>
+        <form id="subject-form" novalidate>
+          <label for="subject-name">Subject name</label>
+          <input type="text" id="subject-name" maxlength="40" placeholder="e.g. Mathematics" autocomplete="off" required>
+
+          <div class="form-row">
+            <div>
+              <label for="subject-attended">Classes attended</label>
+              <input type="number" id="subject-attended" min="0" step="1" value="0" inputmode="numeric">
+            </div>
+            <div>
+              <label for="subject-total">Classes held</label>
+              <input type="number" id="subject-total" min="0" step="1" value="0" inputmode="numeric">
+            </div>
+          </div>
+
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+          <button type="submit" class="btn btn-primary">Add subject</button>
+        </form>
+      </section>
+    </aside>
+
+    <section class="subjects-wrap" aria-labelledby="subjects-title">
+      <div class="subjects-head">
+        <h2 id="subjects-title">Subjects</h2>
+        <button type="button" class="btn btn-quiet" id="reset-all" hidden>Clear all subjects</button>
+      </div>
+
+      <p class="empty" id="empty-state">No subjects yet. Add one on the left and its register will appear here.</p>
+      <ul class="subjects" id="subjects"></ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Your data stays in this browser. Nothing is uploaded.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
